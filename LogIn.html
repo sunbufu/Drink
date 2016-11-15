@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<script src="js/mui.min.js"></script>
+		<script src="js/wilddog.min.js"></script>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link rel="stylesheet" type="text/css" href="css/LogIn.css" />
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<h1 class="mui-title">喝水吧</h1>
+		</header>
+		<div class="mui-content">
+			<form id='login-form' class="mui-input-group">
+				<div class="mui-input-row">
+					<label>邮箱</label>
+					<input id='email' type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱" value="sunyoubufu@qq.com">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码" value="abcd1234">
+				</div>
+			</form>
+			<form class="mui-input-group">
+				<ul class="mui-table-view mui-table-view-chevron">
+					<li class="mui-table-view-cell">
+						自动登录
+						<div id="autoLogin" class="mui-switch mui-switch-mini">
+							<div class="mui-switch-handle"></div>
+						</div>
+					</li>
+				</ul>
+			</form>
+			<div class="mui-content-padded">
+				<button id='login' class="mui-btn mui-btn-block mui-btn-primary">登录</button>
+				<div class="link-area">
+					<a id='reg'>注册账号</a> <span class="spliter">|</span>
+					<a id='forgetPassword'>忘记密码</a>
+				</div>
+			</div>
+		</div>
+		<script type="text/javascript" charset="utf-8">
+			mui.init();
+
+			mui.plusReady(function() {
+				var emailT = document.getElementById("email"); //邮箱
+				var passT = document.getElementById("password"); //密码
+				var autoS = document.getElementById("autoLogin"); //自动登录
+				var logInBtn = document.getElementById("login"); //登陆按钮
+				var regBtn = document.getElementById("reg"); //注册账号
+				var forgetBtn = document.getElementById("forgetPassword"); //忘记密码
+
+				emailT.value = plus.storage.getItem("email");
+				passT.value = plus.storage.getItem("pass");
+//				console.log(plus.storage.getItem("auto"));
+				autoS.classList[(plus.storage.getItem("auto") ? 'add' : 'remove')]('mui-active');
+
+				logInBtn.addEventListener('tap', function(e) {
+					//对电子邮件的验证
+					var emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+					if(emailReg.test(emailT.value)) {
+						if(passT.value.length >= 6) {
+//							console.log('email:' + emailT.value + " pwd:" + passT.value);
+							//						logIn(emailT.value, passT.value, logSuccess, logFailed);	
+							logIn('sunyoubufu@qq.com', 'abcd1234', logSuccess, logFailed);
+						} else {
+							mui.toast("密码输入错误！");
+						}
+					} else {
+						mui.toast("邮箱输入错误！");
+					}
+
+				});
+
+				function logSuccess(user) {
+					if(autoS.classList.contains("mui-active")) {
+						plus.storage.setItem("email", emailT.value);
+						plus.storage.setItem("pass", passT.value);
+						plus.storage.setItem("auto", "true");
+					} else {
+						plus.storage.removeItem("email");
+						plus.storage.removeItem("pass");
+						plus.storage.removeItem("auto");
+					}
+
+					mui.openWindow({
+						url: 'main.html',
+						id: 'main',
+						preload: true,
+						show: {
+							aniShow: 'pop-in'
+						},
+						styles: {
+							popGesture: 'hide'
+						},
+						waiting: {
+							autoShow: false,
+							duration: 200
+						},
+						extras: {
+							'userInfo': user
+						}
+					})
+				}
+
+				function logFailed() {
+					mui.toast("邮箱或密码输入错误");
+				}
+
+				regBtn.addEventListener('tap', function(e) {
+					mui.openWindow({
+						url: 'reg.html',
+						id: 'reg',
+						preload: true,
+						show: {
+							aniShow: 'pop-in'
+						},
+						styles: {
+							popGesture: 'hide'
+						},
+						waiting: {
+							autoShow: false,
+							duration: 200
+						}
+					})
+				});
+				forgetBtn.addEventListener('tap', function(e) {
+					mui.openWindow({
+						url: 'forget.html',
+						id: 'forget',
+						preload: true,
+						show: {
+							aniShow: 'pop-in'
+						},
+						styles: {
+							popGesture: 'hide'
+						},
+						waiting: {
+							autoShow: false,
+							duration: 200
+						}
+					})
+				});
+			});
+		</script>
+		<script src="js/DBUtils.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/Auth.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

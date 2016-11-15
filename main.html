@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<style>
+			ul {
+				font-size: 14px;
+				color: #8f8f94;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+			
+			.chart {
+				height: 200px;
+				margin: 0px;
+				padding: 0px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav" style="padding-right: 15px;">
+			<h1 class="mui-title">喝水吧</h1>
+			<span class="mui-icon mui-icon mui-icon-plusempty mui-pull-right" onclick="drink()"></span>
+		</header>
+		<div class="mui-content">
+			<div class="mui-content-padded">
+				<p>
+					今天还要喝<span id='plainSum'>{{sum}}</span>ml
+				</p>
+				<!--<button  class="mui-btn mui-btn-block mui-btn-primary">设置</button>
+				<button id='exit' class="mui-btn mui-btn-block mui-btn-green">关闭</button>
+                <button id='logout' class="mui-btn mui-btn-red mui-btn-block">注销登录</button>-->
+
+			</div>
+			<!--喝水计划-->
+			<ul id="plainTable" class="mui-table-view">
+				<li v-for="item in items" class="mui-table-view-cell all" v-show="item.show">
+					<div class="mui-slider-left mui-disabled">
+						<a class="mui-btn mui-btn-blue changeTime" @click="changeTime(item)">时间</a>
+						<a class="mui-btn mui-btn-green changeYield" @click="changeYield(item)">容量</a>
+					</div>
+					<div class="mui-slider-handle time" @click="drink(item)">
+						时间 {{ item.time }}
+					</div>
+					<span class="mui-badge mui-badge-primary yield">
+						{{ item.yield }}ml
+					</span>
+				</li>
+			</ul>
+
+			<div class="mui-content-padded">
+				<p>
+					七天饮水记录
+				</p>
+				<div class="chart" id="lineChart"></div>
+			</div>
+
+			<!--<ul id="plainTable" class="mui-table-view">
+				<li class="mui-table-view-cell all">
+					<div class="mui-slider-left mui-disabled">
+						<a class="mui-btn mui-btn-blue changeTime">时间</a>
+						<a class="mui-btn mui-btn-green changeYield">容量</a>
+					</div>
+					<div class="mui-slider-handle time">
+						时间 09:30
+					</div>
+					<span class="mui-badge mui-badge-primary yield">
+						300ml
+					</span>
+				</li>
+			</ul>-->
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/wilddog.min.js"></script>
+		<script src="js/DBUtils.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/vue.min.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/echarts-all.js" type="text/javascript" charset="utf-8"></script>
+		<script src="js/main.js" type="text/javascript" charset="utf-8"></script>
+	</body>
+
+</html>

@@ -1,0 +1,54 @@
+{
+	"main.html": {
+		"refer": [
+			"setting.html"
+		],
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"js/main.js",
+			"js/DBUtils.js",
+			"fonts/mui.ttf",
+			"js/vue.min.js",
+			"js/echarts-all.js",
+			"js/wilddog.min.js"
+		]
+	},
+	"LogIn.html": {
+		"resources": [
+			"js/Auth.js",
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"css/LogIn.css",
+			"js/DBUtils.js",
+			"fonts/mui.ttf",
+			"js/wilddog.min.js"
+		],
+		"refer": [
+			"main.html",
+			"reg.html",
+			"forget.html"
+		]
+	},
+	"setting.html": {
+		"resources": [
+			"js/mui.min.js",
+			"css/mui.min.css",
+			"fonts/mui.ttf"
+		]
+	},
+	"reg.html": {
+		"resources": [
+			"js/mui.min.js",
+			"fonts/mui.ttf",
+			"css/mui.min.css"
+		]
+	},
+	"forget.html": {
+		"resources": [
+			"fonts/mui.ttf",
+			"js/mui.min.js",
+			"css/mui.min.css"
+		]
+	}
+}

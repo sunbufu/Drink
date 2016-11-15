@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html class="ui-page-login">
+
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,minimum-scale=1,maximum-scale=1,user-scalable=no" />
+		<title></title>
+		<link href="css/mui.min.css" rel="stylesheet" />
+		<link href="css/style.css" rel="stylesheet" />
+		<script type="text/javascript" src="js/wilddog.min.js"></script>
+		<style>
+			.area {
+				margin: 20px auto 0px auto;
+			}
+			
+			.mui-input-group:first-child {
+				margin-top: 20px;
+			}
+			
+			.mui-input-group label {
+				width: 22%;
+			}
+			
+			.mui-input-row label~input,
+			.mui-input-row label~select,
+			.mui-input-row label~textarea {
+				width: 78%;
+			}
+			
+			.mui-checkbox input[type=checkbox],
+			.mui-radio input[type=radio] {
+				top: 6px;
+			}
+			
+			.mui-content-padded {
+				margin-top: 25px;
+			}
+			
+			.mui-btn {
+				padding: 10px;
+			}
+		</style>
+	</head>
+
+	<body>
+		<header class="mui-bar mui-bar-nav">
+			<a class="mui-action-back mui-icon mui-icon-left-nav mui-pull-left"></a>
+			<h1 class="mui-title">注册</h1>
+		</header>
+		<div class="mui-content">
+			<form class="mui-input-group">
+				<div class="mui-input-row">
+					<label>昵称</label>
+					<input id='nick' type="text" class="mui-input-clear mui-input" placeholder="请输入昵称">
+				</div>
+				<div class="mui-input-row">
+					<label>密码</label>
+					<input id='password' type="password" class="mui-input-clear mui-input" placeholder="请输入密码">
+				</div>
+				<div class="mui-input-row">
+					<label>邮箱</label>
+					<input id='email' type="text" class="mui-input-clear mui-input" placeholder="请输入邮箱">
+				</div>
+			</form>
+			<div class="mui-content-padded">
+				<button id='reg' class="mui-btn mui-btn-block mui-btn-primary">注册</button>
+			</div>
+		</div>
+		<script src="js/mui.min.js"></script>
+		<script src="js/app.js"></script>
+		<script>
+			mui.init();
+			mui.plusReady(function() {
+				var regBtn = document.getElementById('reg');
+				var nickT = document.getElementById('nick');
+				var passT = document.getElementById('password');
+				var emailT = document.getElementById('email');
+				regBtn.addEventListener('tap', function(event) {
+					//对电子邮件的验证
+				var emailReg = /^([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+@([a-zA-Z0-9]+[_|\_|\.]?)*[a-zA-Z0-9]+\.[a-zA-Z]{2,3}$/;
+					if(!emailReg.test(emailT.value)){
+						plus.nativeUI.toast('邮箱输入错误');
+						return;
+					}
+					if(passT.value.length <= 6){
+						plus.nativeUI.toast('密码长度过短');
+						return;
+					}
+					var regInfo = {
+						account: nickT.value,
+						password: passT.value,
+						email: emailT.value
+					};
+					regBtn.addEventListener("click", function(e) {
+						var config = {
+							authDomain: "shsdrink.wilddog.com"
+						};
+						wilddog.initializeApp(config, "DEFAULT");
+						wilddog.auth().createUserWithEmailAndPassword(emailT.value, passT.value).then(function(user) {
+							// 获取用户
+							console.log('用户信息：' + user);
+							user.sendEmailVerification();
+//							plus.nativeUI.toast('请激活邮箱');
+							mui.toast('请激活邮箱');
+						}).catch(function(error) {
+							// 错误处理
+							console.log('错误处理：' + error);
+						});
+					});
+				});
+			});
+		</script>
+	</body>
+
+</html>
